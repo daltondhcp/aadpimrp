@@ -23,8 +23,7 @@
             }
         }
     },
-    "variables": {
-    },
+    "variables": {},
     "resources": [
         {
             "type": "Microsoft.Authorization/roleEligibilityScheduleRequests",
