@@ -7,11 +7,23 @@ param BuiltInroleDefinitionId string = 'b24988ac-6180-42a0-ab88-20f7382dd24c'
 @description('A new GUID used to identify the role assignment')
 param roleNameGuid string = newGuid()
 
+@description('Start DateTime of the role eligibility schedule')
+param startDateTime string = utcNow()
+
 resource roleNameGuid_resource 'Microsoft.Authorization/roleEligibilityScheduleRequests@2020-10-01-preview' = {
   name: roleNameGuid
   properties: {
     principalId: principalId
     roleDefinitionId: '/providers/Microsoft.Authorization/roleDefinitions/${BuiltInroleDefinitionId}'
     requestType: 'AdminAssign'
+    scheduleInfo: {
+      startDateTime: startDateTime
+      expiration: {
+        type: 'AfterDuration'
+        endDateTime: null
+        duration: 'P365D'
+      }
+      recurrence: null
+    }
   }
 }
