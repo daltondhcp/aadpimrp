@@ -21,6 +21,13 @@
             "metadata": {
                 "description": "A new GUID used to identify the role assignment"
             }
+        },
+        "startDateTime": {
+            "type": "string",
+            "defaultValue": "[utcNow()]",
+            "metadata": {
+                "description": "Start DateTime of the role eligibility schedule"
+            }
         }
     },
     "variables": {
@@ -33,7 +40,16 @@
             "properties": {
                 "principalId": "[parameters('principalId')]",
                 "roleDefinitionId": "[concat('/providers/Microsoft.Authorization/roleDefinitions/',parameters('builtInroleDefinitionId'))]",
-                "requestType": "AdminAssign"
+                "requestType": "AdminAssign",
+                "scheduleInfo": {
+                    "startDateTime": "[parameters('startDateTime')]",
+                    "expiration": {
+                        "type": "AfterDuration",
+                        "endDateTime": null,
+                        "duration": "P365D"
+                    },
+                    "recurrence": null
+                }
             }
         }
     ]
